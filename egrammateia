@@ -1,0 +1,150 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct FOIT{
+	char ok[5]; /*Voithiko string gia allagh grammhs*/
+	char ar[8]; /*Arithmos mhtrwou foithth*/
+	char name[10]; /*Onoma foithth*/
+	char surname[10]; /*Epwnymo foithth*/
+} rec;
+
+struct VATHM{
+	char ok[5]; /*Voithiko string gia allagh grammhs*/
+	char ar[8]; /*Arithmos mhtrwou foithth*/
+	char code[8]; /*Kwdikos mathmatos*/
+	char eks[10]; /*Elsetstikh periodos*/
+	int vathmos; /*Vathmos mathimatos*/
+} rec2;
+
+FILE *fp;
+FILE *fp2;
+void main(){
+	system("clear"); /*UNIX*/
+for(;;){
+	printf("1. Dhmiourgia-Arxikopoihsh Arxeiou Foithtwn\n");
+	printf("2. Dhmiourgia-Arxikopoihsh Arxeiou Vathmologias\n");
+	printf("3. Eisagwgh Stoixeiwn Foithth sto arxeio Foithtwn\n");
+	printf("4. Eisagwgh Vathmologias sto arxeio Vathmologias\n");
+	printf("5. Provolh Arxeiou Foithtwn\n");
+	printf("6. Provolh Arxeiou Vathmologias\n");
+	printf("7. Eksodos apo to Programma\n");
+	int sel = 0;
+	scanf("%d",&sel);
+	switch (sel){
+		case 1:
+		{
+			system("clear"); /*UNIX*/
+			if ((fp=fopen("Foitites","a+b")) == NULL){
+				printf("Cannot open file\n"); 
+			} else{
+				printf("File 'Foitites' successfully created.\n\n");
+			}
+			fclose(fp);
+			break;
+		}	
+		case 2:
+		{
+			system("clear"); /*UNIX*/
+			if ((fp2=fopen("Vathmologia","a+b")) == NULL){
+				printf("Cannot open file\n"); 
+			} else{
+				printf("File 'Vathmologia' successfully created.\n\n");
+			}
+			fclose(fp2);
+			break;
+		}
+		case 3:
+		{
+			system("clear"); /*UNIX*/
+			char ep = 'y';
+			if ((fp=fopen("Foitites","wb")) == NULL){
+				printf("Cannot open file \n"); 
+			}
+			while(ep=='y' || ep=='Y'){
+				printf("New Student\n\n");
+				printf("Aritmos Mhtrwou:\t");
+				gets(rec.ok);
+				gets(rec.ar);
+				printf("Epwnymo:\t");
+				gets(rec.surname);
+				printf("Onoma:\t");
+				gets(rec.name);
+				fwrite(&rec,sizeof(rec),1,fp);
+				printf("Insert a new student? [y/]\t");
+				scanf("%s",&ep);
+				printf("\n");
+			} 
+			fclose(fp);
+			break;
+		}
+		case 4:
+		{
+			system("clear"); /*UNIX*/
+			char ep = 'y';
+			char str[3];
+			if ((fp2=fopen("Vathmologia","wb")) == NULL){
+				printf("Cannot open file \n");
+			}
+			while(ep=='y' || ep=='Y'){
+				printf("New Vathmologia\n\n");
+				printf("Aritmos Mhtrwou:\t");
+				gets(rec2.ok);
+				gets(rec2.ar);
+				printf("Kwdikos Mathimatos:\t");
+				gets(rec2.code);
+				printf("Eksetastikh Periodos:\t");
+				gets(rec2.eks);
+				printf("Vathmos:\t");
+				gets(str);
+				rec2.vathmos=atoi(str);
+				fwrite(&rec2,sizeof(rec2),1,fp2);
+				printf("Insert a new grade? [y/]\t");
+				scanf("%s",&ep);
+				printf("\n");
+			}
+			fclose(fp2);
+			break;
+		}	
+		case 5:
+		{
+			system("clear"); /*UNIX*/
+			if ((fp=fopen("Foitites","rb")) == NULL){
+				printf("Cannot open file\n");
+			}
+			while(!feof(fp)){
+				fread(&rec,sizeof(rec),1,fp);
+				if(!feof(fp))
+					printf("%10s %10s %10s\n",rec.ar,rec.name,rec.surname);
+			}
+			fclose(fp);
+			break;
+		}	
+		case 6:
+		{
+			system("clear"); /*UNIX*/
+			if ((fp2=fopen("Vathmologia","rb")) == NULL){
+				printf("Cannot open file\n");
+			}
+			while(!feof(fp2)){
+				fread(&rec2,sizeof(rec2),1,fp2);
+				if(!feof(fp2))
+					printf("%10s %10s %10s %10d\n",rec2.ar,rec2.code,rec2.eks,rec2.vathmos);
+			}
+			fclose(fp2);
+			break;
+		}
+		case 7:
+		{
+			system("clear"); /*UNIX*/
+			printf("The program is exiting...\n"); exit(0);
+			break;
+		}
+		default:
+		{
+			system("clear"); /*UNIX*/
+			printf("Wrong input. Try again...\n");
+		}
+	}	
+}
+}
